@@ -11,6 +11,7 @@ use crate::adapter::web::response::DeviceGroupRegistryResponse;
 use crate::domain::device::DeviceGroup;
 use super::request::DeviceRegistryRequest;
 use chrono::prelude::*;
+use crate::adapter::persistence::get_pool;
 use crate::core;
 #[post("/device-group")]
 async fn registry_device(req_body: web::Json<DeviceRegistryRequest>) -> impl Responder {
@@ -23,7 +24,7 @@ async fn registry_device(req_body: web::Json<DeviceRegistryRequest>) -> impl Res
         }
     };
 
-    //println!("RES {:?} {:?}", req_body, DateTime::parse_from_str());
+    println!("RES {:?} {:?}", req_body, get_pool().await);
     HttpResponse::Ok().json(response)
 }
 
@@ -42,6 +43,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
             //.wrap(HttpAuthentication::bearer(ok_validator))
             .service(registry_device)
             .service(about)
+
             //.route("users", web::get().to(users::get_users))
     );
 }

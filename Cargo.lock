@@ -102,6 +102,7 @@ version = "2.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28f32d40287d3f402ae0028a9d54bef51af15c8769492826a69d28f81893151d"
 dependencies = [
+ "actix-macros",
  "futures-core",
  "tokio",
 ]
@@ -435,6 +436,23 @@ name = "async-task"
 version = "4.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b4eb2cdb97421e01129ccb49169d8279ed21e829929144f4a22a6e54ac549ca1"
+
+[[package]]
+name = "async-trait"
+version = "0.1.74"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a66537f1bb974b254c98ed142ff995236e81b9d0fe4db0575f46612cb15eb0f9"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.41",
+]
+
+[[package]]
+name = "async_once"
+version = "0.2.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ce4f10ea3abcd6617873bae9f91d1c5332b4a778bd9ce34d0cd517474c1de82"
 
 [[package]]
 name = "atoi"
@@ -1366,9 +1384,12 @@ name = "iot-api-service"
 version = "0.1.0"
 dependencies = [
  "actix-cors",
+ "actix-rt",
  "actix-web",
  "anyhow",
  "async-std",
+ "async-trait",
+ "async_once",
  "chrono",
  "diesel",
  "dotenv",
@@ -1376,6 +1397,7 @@ dependencies = [
  "itertools",
  "lazy_static",
  "log",
+ "once_cell",
  "r2d2",
  "rust_decimal",
  "serde",
@@ -1383,6 +1405,7 @@ dependencies = [
  "snafu",
  "sqlx",
  "thiserror",
+ "tokio",
 ]
 
 [[package]]

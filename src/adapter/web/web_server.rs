@@ -13,6 +13,8 @@ pub async fn start() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             //.wrap(HttpAuthentication::bearer(ok_validator))
             .configure(web_api::routes)
+            //.app_data()
+
             //.service(hello)
             //.service(echo)
             //.route("/hey", web::get().to(manual_hello))

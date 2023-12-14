@@ -25,6 +25,7 @@ fn convert_save_template_items(ts: SaveDeviceTemperature) -> Vec<SaveTemperature
 
     let mut temp_items: Vec<SaveTemperatureItem> = vec![];
     for (i, temp) in temperatures.iter().enumerate() {
+
         temp_items.push(SaveTemperatureItem {
             temperature: *temp,
             measure_at: plus_secs_datetime_string(basis, (ts.interval * i as i32) as i64)
