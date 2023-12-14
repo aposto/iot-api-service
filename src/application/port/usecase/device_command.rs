@@ -1,7 +1,13 @@
 use crate::domain::device::{Device, DeviceGroup};
 use anyhow::Result;
-pub trait DeviceCommand {
-    fn register_device_group(&self, group_serial: String) -> Result<DeviceGroup>;
+use async_trait::async_trait;
 
-    fn register_device(&self, device_serial: String) -> Result<Device>;
+#[async_trait]
+pub trait DeviceCommand {
+    async fn register_device_group(group_serial: String) -> Result<DeviceGroup>;
+
+    async fn register_device(device_serial: String, group_serial: String) -> Result<Device>;
+}
+
+pub struct DeviceCommandService {
 }

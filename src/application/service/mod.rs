@@ -1,1 +1,3 @@
 mod save_temperature_service;
+mod device_command_service;
+mod device_query_service;

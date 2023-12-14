@@ -7,14 +7,12 @@ edition = "2021"
 
 [dependencies]
 actix-cors = "0.6.5"
-actix-rt = "2.9.0"
 actix-web = "4.4.0"
 anyhow = "1.0.75"
+async-once-cell = "0.5.3"
 async-std = "1.12.0"
 async-trait = "0.1.74"
-async_once = "0.2.6"
 chrono = "0.4.31"
-diesel = { version = "2.1.4", features = ["mysql", "serde_json", "r2d2"] }
 dotenv = "0.15"
 env_logger = "0.10.1"
 itertools = "0.12.0"
@@ -28,4 +26,7 @@ serde_json = "1.0.108"
 snafu = "0.7.5"
 sqlx = { version = "^0.7", features = ["runtime-async-std", "mysql", "macros", "chrono", "json", "bigdecimal", "uuid", "time"] } # [] runtime-async-std-rustls runtime-actix-rustls  runtime-tokio-rustls
 thiserror = "1.0.50"
-tokio = "1.35.0"
+utoipa = { version = "4", features = ["actix_extras"] }
+
+[dev-dependencies]
+actix-rt = "2.9.0"
