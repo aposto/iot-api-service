@@ -1,15 +1,11 @@
 use anyhow::*;
 use std::{i16, str};
-use async_trait::async_trait;
 use chrono::{Duration, NaiveDateTime};
 use crate::application::port::outbound::SaveTemperaturePort;
 use crate::domain::temperature::{SaveDeviceTemperature, SaveTemperatureItem};
 use crate::application::port::usecase::{SaveTemperatureService, SaveTemperatureUseCase};
 use crate::domain::{TIME_FORMAT};
 
-
-
-#[async_trait]
 impl SaveTemperatureUseCase for SaveTemperatureService {
     async fn save_temperatures(ts: SaveDeviceTemperature) -> Result<bool> {
         let serial_number = ts.serial_number.clone();

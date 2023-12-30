@@ -1,11 +1,8 @@
 use crate::application::port::usecase::{DeviceCommand, DeviceCommandService};
 use crate::domain::device::{Device, DeviceGroup};
 use anyhow::Result;
-use async_trait::async_trait;
 use crate::application::port::outbound::SaveDevicePort;
 
-
-#[async_trait]
 impl DeviceCommand for DeviceCommandService {
 
     async fn register_device_group(group_serial: String) -> Result<DeviceGroup> {

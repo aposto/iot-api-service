@@ -7,6 +7,7 @@ use actix_web::{
     middleware::Logger,
     web,
 };
+use anyhow::__private::kind::AdhocKind;
 use crate::adapter::web::response::CommandResponse;
 use super::request::{DeviceGroupRegistryRequest, DeviceRegistryRequest, TemperatureRegistryRequest};
 use crate::application::port::usecase::*;
@@ -21,6 +22,7 @@ async fn registry_device_group(req: web::Json<DeviceGroupRegistryRequest>) -> im
 }
 #[post("/device")]
 async fn registry_device(req: web::Json<DeviceRegistryRequest>) -> impl Responder {
+
     let device = DeviceCommandService::register_device(
         req.serial_number.clone(),
         req.device_group_serial.clone()).await;

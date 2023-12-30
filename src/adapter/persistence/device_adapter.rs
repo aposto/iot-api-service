@@ -1,5 +1,3 @@
-use std::fmt::format;
-use actix_web::web::Buf;
 use anyhow::Result;
 use crate::adapter::persistence::get_pool;
 use crate::application::port::outbound::SaveDevicePort;

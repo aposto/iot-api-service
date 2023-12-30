@@ -19,3 +19,20 @@ fn tst_hex_string() {
     println!("--> {} ", z1.unwrap() as i16);
 
 }
+
+fn foo_ref(s: &String) {
+    println!("FOO {} ", s);
+}
+
+fn foo_ref2(s: &str) {
+    println!("FOO {} ", s);
+}
+#[test]
+fn test_string_ref() {
+    let s = String::from("ABC");
+    foo_ref(&s);
+    foo_ref2(s.as_str());
+
+    println!("BAR {} ", s);
+
+}
