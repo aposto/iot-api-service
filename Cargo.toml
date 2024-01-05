@@ -23,7 +23,7 @@ r2d2 = "0.8.10"
 rust_decimal = "^1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.108"
-snafu = "0.7.5"
+snafu = "0.8.0"
 sqlx = { version = "^0.7", features = ["runtime-async-std", "mysql", "macros", "chrono", "json", "bigdecimal", "uuid", "time"] } # [] runtime-async-std-rustls runtime-actix-rustls  runtime-tokio-rustls
 thiserror = "1.0.50"
 utoipa = { version = "4", features = ["actix_extras"] }

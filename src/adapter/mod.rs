@@ -2,6 +2,7 @@ use anyhow::Result;
 mod web;
 mod persistence;
 mod app_context;
+mod modules;
 
 pub use app_context::AppContext;
 
@@ -16,3 +17,6 @@ pub async fn web_start() -> std::io::Result<()> {
     return web::web_server::start().await
 }
 
+pub fn init_modules() -> Result<()> {
+    modules::inject_modules()
+}
