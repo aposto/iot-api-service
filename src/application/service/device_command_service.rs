@@ -1,10 +1,11 @@
+use std::fmt::Debug;
 use async_trait::async_trait;
 use crate::domain::device::{Device, DeviceGroup};
 use crate::application::port::outbound::save_device_port::SaveDevicePort;
 use crate::application::port::usecase::command::DeviceCommand;
 
 pub struct DeviceCommandService {
-    pub save_device: Box<dyn SaveDevicePort + Sync + Send>
+    pub save_device: Box<dyn SaveDevicePort + Sync + Send >
 }
 
 #[async_trait]
@@ -19,6 +20,11 @@ impl DeviceCommand for DeviceCommandService {
     }
 }
 
+// impl Debug for dyn DeviceCommand {
+//     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+//         write!(f, "DeviceCommand{{}}")
+//     }
+// }
 impl DeviceCommandService {
     pub fn new(save_device: Box<dyn SaveDevicePort + Sync + Send>) -> DeviceCommandService {
         DeviceCommandService{save_device}

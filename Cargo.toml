@@ -9,7 +9,7 @@ edition = "2021"
 actix-cors = "0.6"
 actix-web = "4.4"
 anyhow = "1.0"
-async-once-cell = "0.5"
+# async-once-cell = "0.5"
 async-std = "1.12"
 async-trait = { version = "0.1", features = [] }
 chrono = "0.4"
@@ -28,6 +28,7 @@ snafu = "0.8"
 sqlx = { version = "^0.7", features = ["runtime-async-std", "mysql", "macros", "chrono", "json", "bigdecimal", "uuid", "time"] } # [] runtime-async-std-rustls runtime-actix-rustls  runtime-tokio-rustls
 thiserror = "1.0"
 utoipa = { version = "4", features = ["actix_extras"] }
+utoipa-swagger-ui = { version = "5", features = ["actix-web"] }
 
 [dev-dependencies]
 actix-rt = "2.9"
