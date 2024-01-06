@@ -1,6 +1,7 @@
 use std::env;
 use actix_web::{App, HttpServer, middleware};
 use log::info;
+use crate::adapter::state::state_factory;
 use super::web_api;
 
 pub async fn start() -> std::io::Result<()> {
@@ -10,6 +11,7 @@ pub async fn start() -> std::io::Result<()> {
     HttpServer::new(|| {
         //let auth = HttpAuthentication::basic(validator);
         App::new()
+            .data_factory(state_factory)
             .wrap(middleware::Logger::default())
             //.wrap(HttpAuthentication::bearer(ok_validator))
             .configure(web_api::routes)

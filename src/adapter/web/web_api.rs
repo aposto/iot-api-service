@@ -7,39 +7,41 @@ use actix_web::{
     middleware::Logger,
     web,
 };
-use anyhow::__private::kind::AdhocKind;
 use crate::adapter::web::response::CommandResponse;
+use crate::adapter::web::web_state::WebState;
+use crate::application::port::usecase::command::DeviceCommand;
 use super::request::{DeviceGroupRegistryRequest, DeviceRegistryRequest, TemperatureRegistryRequest};
-use crate::application::port::usecase::*;
 use crate::domain::temperature::SaveDeviceTemperature;
 
 #[post("/device-group")]
-async fn registry_device_group(req: web::Json<DeviceGroupRegistryRequest>) -> impl Responder {
-    let group = DeviceCommandService::register_device_group(
-        req.device_group_serial.clone()).await;
+async fn registry_device_group(data: web::Data<WebState>, req: web::Json<DeviceGroupRegistryRequest>) -> HttpResponse {
 
-    HttpResponse::Ok().json(group.unwrap())
+    //let group = data.device_command.register_device_group(req.device_group_serial.clone()).await;
+    //HttpResponse::Ok().json(group.unwrap())
+    todo!()
 }
 #[post("/device")]
-async fn registry_device(req: web::Json<DeviceRegistryRequest>) -> impl Responder {
+async fn registry_device(data: web::Data<WebState>, req: web::Json<DeviceRegistryRequest>) -> HttpResponse { // impl Responder {
 
-    let device = DeviceCommandService::register_device(
-        req.serial_number.clone(),
-        req.device_group_serial.clone()).await;
-    HttpResponse::Ok().json(device.unwrap())
+    // let device = data.device_command.register_device(
+    //     req.serial_number.clone(),
+    //     req.device_group_serial.clone()).await;
+    // HttpResponse::Ok().json(device.unwrap())
+    todo!()
 }
 
 #[post("/temperatures")]
-async fn save_temperature(req: web::Json<TemperatureRegistryRequest>) -> impl Responder {
-    let domain = SaveDeviceTemperature {
-        serial_number: req.serial_number.clone(),
-        interval: req.interval,
-        temperatures:  req.temperatures.clone(),
-        registered_at: req.registered_at.clone(),
-    };
-    SaveTemperatureService::save_temperatures(domain).await
-        .expect("save failed check log");
-    HttpResponse::Ok().json(CommandResponse { msg: String::from("success")})
+async fn save_temperature(data: web::Data<WebState>, req: web::Json<TemperatureRegistryRequest>) -> HttpResponse {
+    // let domain = SaveDeviceTemperature {
+    //     serial_number: req.serial_number.clone(),
+    //     interval: req.interval,
+    //     temperatures:  req.temperatures.clone(),
+    //     registered_at: req.registered_at.clone(),
+    // };
+    // data.save_temperature_usecase.save_temperatures(domain).await
+    //     .expect("save failed check log");
+    // HttpResponse::Ok().json(CommandResponse { msg: String::from("success")})
+    todo!()
 }
 #[get("/about")]
 async fn about() -> impl Responder {

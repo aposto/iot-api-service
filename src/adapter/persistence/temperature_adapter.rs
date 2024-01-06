@@ -1,19 +1,22 @@
 use anyhow::Result;
-use futures::future::join_all;
+use async_trait::async_trait;
 use sqlx::QueryBuilder;
 use crate::adapter::persistence::get_pool;
-use crate::application::port::outbound::SaveTemperaturePort;
+use crate::application::port::outbound::save_temperature_port::SaveTemperaturePort;
 use crate::domain::temperature::{SaveTemperatureItem};
 
 #[derive(Debug)]
-pub struct DbTemperature {
+struct DbTemperature {
     pub serial_number: String,
     pub temperature: i16,
     pub measure_at: String,
 }
 
-impl SaveTemperaturePort {
-    pub(crate) async fn save_temperatures(serial_number: String, items: Vec<SaveTemperatureItem>) -> Result<bool> {
+pub struct SaveTemperatureAdapter;
+
+#[async_trait]
+impl SaveTemperaturePort for SaveTemperatureAdapter {
+    async fn save_temperatures(&self, serial_number: String, items: Vec<SaveTemperatureItem>) -> Result<bool> {
         // let pool = get_pool().await;
         // for (item) in items {
         //     sqlx::query!("INSERT INTO temperatures(serial_number, temperature, registered_at) VALUES(?, ?, ?) ",

@@ -55,3 +55,4 @@ Unit Test는 구현해주세요.
  * OLAPDB사용
 
 
+domain = { path = "../domain", version = "0.1.0" }

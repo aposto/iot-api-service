@@ -1,6 +1,9 @@
-use crate::domain::device::DeviceGroup;
+use crate::domain::device::{Device, DeviceGroup};
+use async_trait::async_trait;
+#[async_trait]
+pub trait SaveDevicePort {
+    async fn save_device_group(&self, group_serial: String) -> anyhow::Result<DeviceGroup>;
 
-pub struct SaveDevicePort {
-
+    async fn save_device(&self, device_serial: String, group_serial: String) -> anyhow::Result<Device>;
 }
 

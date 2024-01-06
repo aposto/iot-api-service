@@ -1,8 +1,11 @@
-use crate::application::port::usecase::{DeviceQuery, DeviceQueryService};
+use crate::application::port::usecase::query::DeviceQuery;
 use crate::domain::temperature::AvgTemperature;
-use anyhow::*;
+use anyhow::Result;
+use async_trait::async_trait;
 
+pub struct DeviceQueryService;
 
+#[async_trait]
 impl DeviceQuery for DeviceQueryService {
     async fn avg_device_temperature(&self, device_serial: String, start: String, end: String) -> Result<AvgTemperature> {
         todo!()

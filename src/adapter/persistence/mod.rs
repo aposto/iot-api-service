@@ -1,10 +1,9 @@
 use anyhow::Result;
 mod device_repo;
 mod db_pool;
-mod device_adapter;
-mod temperature_adapter;
+pub mod device_adapter;
+pub mod temperature_adapter;
 
-pub use db_pool::GLOBAL_MAP;
 pub use db_pool::get_pool;
 
 pub async fn database_init(db_url: String) -> Result<()> {

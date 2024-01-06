@@ -1,38 +1,50 @@
-use anyhow::*;
 use std::{i16, str};
+use async_trait::async_trait;
 use chrono::{Duration, NaiveDateTime};
-use crate::application::port::outbound::SaveTemperaturePort;
 use crate::domain::temperature::{SaveDeviceTemperature, SaveTemperatureItem};
-use crate::application::port::usecase::{SaveTemperatureService, SaveTemperatureUseCase};
 use crate::domain::{TIME_FORMAT};
+use crate::application::port::outbound::save_device_port::SaveDevicePort;
+use crate::application::port::outbound::save_temperature_port::SaveTemperaturePort;
+use crate::application::port::usecase::use_case::SaveTemperatureUseCase;
 
+pub struct SaveTemperatureService {
+    pub save_temperature: Box<dyn SaveTemperaturePort + Sync + Send>
+}
+
+#[async_trait]
 impl SaveTemperatureUseCase for SaveTemperatureService {
-    async fn save_temperatures(ts: SaveDeviceTemperature) -> Result<bool> {
+    async fn save_device_temperatures(&self, ts: SaveDeviceTemperature) -> anyhow::Result<bool> {
         let serial_number = ts.serial_number.clone();
-        let items = convert_save_template_items(ts);
-
-        SaveTemperaturePort::save_temperatures(serial_number, items).await?;
+        let items = SaveTemperatureService::convert_save_template_items(ts);
+        self.save_temperature.save_temperatures(serial_number, items).await?;
         Ok(true)
     }
+
 }
 
-fn convert_save_template_items(ts: SaveDeviceTemperature) -> Vec<SaveTemperatureItem> {
-    let basis =
-        NaiveDateTime::parse_from_str(ts.registered_at.as_str(), TIME_FORMAT).unwrap();
-
-    let temperatures = parse_hex_i16(ts.temperatures.as_str());
-    //let index = (0..temperatures.len()).collect();
-
-    let mut temp_items: Vec<SaveTemperatureItem> = vec![];
-    for (i, temp) in temperatures.iter().enumerate() {
-
-        temp_items.push(SaveTemperatureItem {
-            temperature: *temp,
-            measure_at: plus_secs_datetime_string(basis, (ts.interval * i as i32) as i64)
-        });
+impl SaveTemperatureService {
+    pub fn new(save_temperature: Box<dyn SaveTemperaturePort + Sync + Send>) -> SaveTemperatureService {
+        SaveTemperatureService { save_temperature }
     }
-    temp_items
+    fn convert_save_template_items(ts: SaveDeviceTemperature) -> Vec<SaveTemperatureItem> {
+        let basis =
+            NaiveDateTime::parse_from_str(ts.registered_at.as_str(), TIME_FORMAT).unwrap();
+
+        let temperatures = parse_hex_i16(ts.temperatures.as_str());
+        //let index = (0..temperatures.len()).collect();
+
+        let mut temp_items: Vec<SaveTemperatureItem> = vec![];
+        for (i, temp) in temperatures.iter().enumerate() {
+
+            temp_items.push(SaveTemperatureItem {
+                temperature: *temp,
+                measure_at: plus_secs_datetime_string(basis, (ts.interval * i as i32) as i64)
+            });
+        }
+        temp_items
+    }
 }
+
 fn plus_secs_datetime_string(dt: NaiveDateTime, seconds: i64) -> String {
     (dt + Duration::seconds(seconds)).format(TIME_FORMAT).to_string()
 }
@@ -69,13 +81,7 @@ mod tests {
 
     #[test]
     fn test_convert_save_template_items() {
-        assert_eq!(convert_save_template_items(make_sample()).len(), 12);
+        assert_eq!(SaveTemperatureService::convert_save_template_items(make_sample()).len(), 12);
     }
-    #[test]
-    fn test_create_inst_save_temperature_use_case() {
-        let use_case = SaveTemperatureService {};
 
-        let items = use_case.save_temperatures(make_sample())
-            .expect("Failure save temperatures");
-    }
 }

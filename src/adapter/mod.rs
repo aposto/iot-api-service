@@ -1,10 +1,10 @@
 use anyhow::Result;
+use crate::adapter::modules::inject_modules;
+
 mod web;
 mod persistence;
-mod app_context;
-mod modules;
-
-pub use app_context::AppContext;
+mod state;
+pub mod modules;
 
 
 pub async fn persistence_init(db_url: String) -> Result<()> {
@@ -18,5 +18,6 @@ pub async fn web_start() -> std::io::Result<()> {
 }
 
 pub fn init_modules() -> Result<()> {
-    modules::inject_modules()
+    inject_modules().expect("injection failed");
+    Ok(())
 }
