@@ -1,5 +1,5 @@
-use serde::{Deserialize};
-use utoipa::ToSchema;
+use serde::{Deserialize, Serialize};
+use utoipa::{IntoParams, ToSchema};
 
 #[derive(Debug, Deserialize, ToSchema)]
 #[serde(rename_all = "camelCase")]
@@ -9,9 +9,13 @@ pub struct DeviceRegistryRequest {
 }
 
 
-#[derive(Debug, Deserialize, ToSchema)]
+//#[derive(Debug, Serialize, Deserialize, ToSchema, Clone)] // IntoParams
+#[derive(ToSchema, Deserialize)] // IntoP
 #[serde(rename_all = "camelCase")]
 pub struct DeviceGroupRegistryRequest {
+   // #[param(allow_reserved, value_type = String, example = "213223232XAC")]
+    //#[schema(value_type = String, format = Date)]
+    #[schema(value_type = String, example = "ASX234322")]
     pub device_group_serial: String,
 }
 

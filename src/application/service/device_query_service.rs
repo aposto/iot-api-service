@@ -7,11 +7,11 @@ pub struct DeviceQueryService;
 
 #[async_trait]
 impl DeviceQuery for DeviceQueryService {
-    async fn avg_device_temperature(&self, device_serial: String, start: String, end: String) -> Result<AvgTemperature> {
+    async fn avg_device_temperature(&self, _device_serial: String, _start: String, _end: String) -> Result<AvgTemperature> {
         todo!()
     }
 
-    async fn avg_group_temperature(&self, group_serial: String, start: String, end: String) -> Result<Vec<AvgTemperature>> {
+    async fn avg_group_temperature(&self, _group_serial: String, _start: String, _end: String) -> Result<Vec<AvgTemperature>> {
         todo!()
     }
 }

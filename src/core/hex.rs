@@ -8,7 +8,7 @@ const HEX16_SIZE: usize = 4;
 //     return str::from_utf8(v)
 //         .map(|s| i32::from_str_radix(s, 16).unwrap() as i16)
 // }
-fn i16s_from_hex(hex: &str) -> Result<Vec<i16>> {
+pub fn i16s_from_hex(hex: &str) -> Result<Vec<i16>> {
     return Ok(hex.as_bytes()
         .chunks(HEX16_SIZE)
         .map(str::from_utf8)

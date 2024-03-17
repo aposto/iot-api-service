@@ -7,27 +7,30 @@ use actix_web::{
     middleware::Logger,
     web,
 };
-use utoipa::OpenApi;
+use serde::Deserialize;
+use utoipa::{OpenApi, ToSchema};
 use utoipa_swagger_ui::SwaggerUi;
 use crate::adapter::web::response::CommandResponse;
 use crate::adapter::web::web_state::WebState;
-use crate::application::port::usecase::command::DeviceCommand;
 use super::request::{DeviceGroupRegistryRequest, DeviceRegistryRequest, TemperatureRegistryRequest};
 use crate::domain::temperature::SaveDeviceTemperature;
+//use serde_json::Value;
+
 
 #[utoipa::path(
     post,
     path = "/device-group/{id}",
-    responses(
-        (status = 200, description = "Pet found succesfully", body = Pet),
-        (status = NOT_FOUND, description = "Pet was not found")
-    ),
     params(
-        ("id" = u64, Path, description = "Pet database id to get Pet for"),
+        ("id" = u64, Path, description = "IOT database id to get device group for")
+    ),
+    request_body = DeviceRegistryRequest,
+    responses(
+        (status = 200, description = "Device Group found successfully" ),
+        (status = NOT_FOUND, description = "Device Group was not found")
     )
 )]
 #[post("/device-group")]
-async fn registry_device_group(data: web::Data<WebState>, req: web::Json<DeviceGroupRegistryRequest>) -> HttpResponse {
+async fn registry_device_group(data: web::Data<WebState>, req: web::Json<DeviceRegistryRequest>) -> HttpResponse {
     let group = data.device_command.register_device_group(req.device_group_serial.clone()).await;
     HttpResponse::Ok().json(group.unwrap())
 }
@@ -60,18 +63,20 @@ async fn about() -> impl Responder {
 }
 
 
+// https://github.com/graphul-rs/graphul/blob/main/examples/utoipa-swagger-ui/src/swagger.rs
+
+
 pub fn routes(cfg: &mut web::ServiceConfig) {
     #[derive(OpenApi)]
     #[openapi(
         paths(
             registry_device_group,
-
         ),
         components(
-            schemas(CommandResponse)
+            schemas(CommandResponse, DeviceRegistryRequest)
         ),
         tags(
-            (name = "todo", description = "Todo management endpoints.")
+            (name = "device", description = "Device management endpoints.")
         ),
     )]
     struct ApiDoc;

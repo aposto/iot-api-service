@@ -3,7 +3,6 @@ use async_trait::async_trait;
 use chrono::{Duration, NaiveDateTime};
 use crate::domain::temperature::{SaveDeviceTemperature, SaveTemperatureItem};
 use crate::domain::{TIME_FORMAT};
-use crate::application::port::outbound::save_device_port::SaveDevicePort;
 use crate::application::port::outbound::save_temperature_port::SaveTemperaturePort;
 use crate::application::port::usecase::use_case::SaveTemperatureUseCase;
 
