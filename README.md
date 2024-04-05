@@ -26,12 +26,6 @@ RUST_LOG=info ./main
 단위테스트는 소스코드내에 #[cfg(test)] 모듈로 하는 방향을 했습니다.
 [save_temperature_service.rs](src/application/service/save_temperature_service.rs)
 
-### IntegrateTest
-tests/ 폴더에 구현해야 하나 시간 관계상 누락 했습니다.
-
-## 완성부분
-전체를 완성하지는 못했고, 등록(Command)과 온도 저장 부분만 구현했습니다.
-아래 두부분이 그나마 제대로 구현 한 부분 같습니다. 
 
 [save_temperature_service.rs](src/application/service/save_temperature_service.rs)
 
